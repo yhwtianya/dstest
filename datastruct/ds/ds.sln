@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "migong_queue", "..\migong_q
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "migong_recursion", "migong_recursion\migong_recursion.vcxproj", "{45B1336C-3E2D-4257-BD67-AEB2CEDA4AAD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "strstr_KMP", "..\strstr_KMP\strstr_KMP.vcxproj", "{9D5F2601-33BE-4758-B9B0-BA95E6E33529}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{45B1336C-3E2D-4257-BD67-AEB2CEDA4AAD}.Release|x64.Build.0 = Release|x64
 		{45B1336C-3E2D-4257-BD67-AEB2CEDA4AAD}.Release|x86.ActiveCfg = Release|Win32
 		{45B1336C-3E2D-4257-BD67-AEB2CEDA4AAD}.Release|x86.Build.0 = Release|Win32
+		{9D5F2601-33BE-4758-B9B0-BA95E6E33529}.Debug|x64.ActiveCfg = Debug|x64
+		{9D5F2601-33BE-4758-B9B0-BA95E6E33529}.Debug|x64.Build.0 = Debug|x64
+		{9D5F2601-33BE-4758-B9B0-BA95E6E33529}.Debug|x86.ActiveCfg = Debug|Win32
+		{9D5F2601-33BE-4758-B9B0-BA95E6E33529}.Debug|x86.Build.0 = Debug|Win32
+		{9D5F2601-33BE-4758-B9B0-BA95E6E33529}.Release|x64.ActiveCfg = Release|x64
+		{9D5F2601-33BE-4758-B9B0-BA95E6E33529}.Release|x64.Build.0 = Release|x64
+		{9D5F2601-33BE-4758-B9B0-BA95E6E33529}.Release|x86.ActiveCfg = Release|Win32
+		{9D5F2601-33BE-4758-B9B0-BA95E6E33529}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
