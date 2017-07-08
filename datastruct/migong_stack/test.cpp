@@ -121,8 +121,10 @@ bool mgpath_stack(int ix, int iy, int ox, int oy)
 	init_stack(s);
 	push(s, item);
 	myitem *top_e = NULL;
+	int total = 0;
 	while (gettop(s, &top_e) && (top_e->x != ox || top_e->y != oy))
 	{
+		++total;
 		//printf("(%d, %d)", top_e->x, top_e->x);
 		myitem ne;
 		bool find = find_next(*top_e, ne);
@@ -150,6 +152,7 @@ bool mgpath_stack(int ix, int iy, int ox, int oy)
 
 	printf("find match path from (%d, %d) to (%d, %d)\n", ix, iy, ox, oy);
 	printf_stack(s);
+	printf("total try %d\n", total);
 	return true;
 }
 
