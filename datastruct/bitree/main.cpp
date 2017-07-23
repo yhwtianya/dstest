@@ -50,8 +50,18 @@ int main()
 
 	//把叶子节点倒序输出路径
 	g_Mystack->top = 0;
-	printf("\n");
+	printf("\nLeafInverted:\n");
 	LeafInverted(bt);
+	//由二叉树前序序列和中序序列创建二叉树
+	printf("\n");
+	string szPre = "ABCDEFHJIG";
+	string szIn = "CBDAFJHIEG";
+	printf("PreString:%s\nInString: %s\nUse PreString and InString CreateTree:\n", 
+		szPre.c_str(), szIn.c_str());
+	BiTree bt_new2 = NULL;
+	CreateTreeUsePreInString(szPre, szIn, bt_new2);
+	DspTree(bt_new2);
+	printf("\n");
 
 
 	return 0;

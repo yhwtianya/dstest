@@ -31,6 +31,8 @@ void CopyTree(BiTree& bt_s, BiTree& bt_d);
 int GetLevel(BiTree& bt, char c, int n);
 
 void LeafInverted(BiTree& bt);
+void CreateTreeUsePreInString(string szPre, string szIn, BiTree& bt);
+void GetChildPreString(int pos, string szPre, string& szPreLeft, string& szPreRight);
 #define MAX_STACK_LEN	128
 struct my_stack
 {

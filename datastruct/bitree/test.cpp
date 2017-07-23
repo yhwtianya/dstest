@@ -304,3 +304,41 @@ void LeafInverted(BiTree& bt)
 	}
 }
 
+void CreateTreeUsePreInString(string szPre, string szIn, BiTree& bt)
+{
+	if (!szPre.empty())
+	{
+		//生成根节点
+		bt = (BiTree)malloc(sizeof(BiTNode));
+		bt->data = szPre[0];
+		int npos = szIn.find(szPre[0]);
+		if (npos!=-1)
+		{
+			//获得左右孩子中序字串
+			string szInLchild = szIn.substr(0, npos);
+			string szInRchild = szIn.substr(npos + 1);
+			//获得左右孩子前序字串
+			string szPreLChild, szPreRChild;
+			GetChildPreString(npos, szPre, szPreLChild, szPreRChild);
+			//生成左右孩子节点
+			CreateTreeUsePreInString(szPreLChild, szInLchild, bt->LChild);
+			CreateTreeUsePreInString(szPreRChild, szInRchild, bt->RChild);
+		}
+		else
+		{
+			printf("error: PreString or InString is not match\n");
+			bt = NULL;
+		}
+	}
+	else
+		bt = NULL;
+}
+
+void GetChildPreString(int npos, string szPre, string& szPreLeft, string& szPreRight)
+{
+	//前序的首位是中序的根，中序的根位置将左右树划分，这个位置
+	//其实也是前序里左右树划分的地方。因为树根的左右节点数量是固定的。
+	//使用前序和中序，去掉根节点，左子树节点后才能是右子树节点
+	szPreLeft = szPre.substr(1, npos);
+	szPreRight = szPre.substr(npos + 1);
+}
