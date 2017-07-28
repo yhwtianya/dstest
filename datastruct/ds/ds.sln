@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bitree", "..\bitree\bitree.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "thread_bitree", "..\thread_bitree\thread_bitree.vcxproj", "{F2FF9A41-259E-4BCF-9685-168378436638}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "huffman_tree", "..\huffman_tree\huffman_tree.vcxproj", "{C7FB64BA-D861-422F-AD1F-F38CD26B0E48}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -81,6 +83,14 @@ Global
 		{F2FF9A41-259E-4BCF-9685-168378436638}.Release|x64.Build.0 = Release|x64
 		{F2FF9A41-259E-4BCF-9685-168378436638}.Release|x86.ActiveCfg = Release|Win32
 		{F2FF9A41-259E-4BCF-9685-168378436638}.Release|x86.Build.0 = Release|Win32
+		{C7FB64BA-D861-422F-AD1F-F38CD26B0E48}.Debug|x64.ActiveCfg = Debug|x64
+		{C7FB64BA-D861-422F-AD1F-F38CD26B0E48}.Debug|x64.Build.0 = Debug|x64
+		{C7FB64BA-D861-422F-AD1F-F38CD26B0E48}.Debug|x86.ActiveCfg = Debug|Win32
+		{C7FB64BA-D861-422F-AD1F-F38CD26B0E48}.Debug|x86.Build.0 = Debug|Win32
+		{C7FB64BA-D861-422F-AD1F-F38CD26B0E48}.Release|x64.ActiveCfg = Release|x64
+		{C7FB64BA-D861-422F-AD1F-F38CD26B0E48}.Release|x64.Build.0 = Release|x64
+		{C7FB64BA-D861-422F-AD1F-F38CD26B0E48}.Release|x86.ActiveCfg = Release|Win32
+		{C7FB64BA-D861-422F-AD1F-F38CD26B0E48}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
