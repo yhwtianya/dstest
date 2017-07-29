@@ -131,9 +131,13 @@ void CreateDG(PAdjMatrix& pam, char* sVertexs, char* sArcs)
 				secondVertex = sArcs[i];
 				int row = FindVertex(pam, firstVertex);
 				int col = FindVertex(pam, secondVertex);
-				pam->arcs[row][col].AdjType = 1;
-				if (UG == pam->kind)
-					pam->arcs[col][row].AdjType = 1;
+				if (pam->arcs[row][col].AdjType==0)
+				{
+					pam->arcs[row][col].AdjType = 1;
+					if (UG == pam->kind)
+						pam->arcs[col][row].AdjType = 1;
+					(pam->arcnum)++;
+				}
 				bFindFirstVertex = false;
 			}
 		}
@@ -191,7 +195,11 @@ void CreateUG(PAdjMatrixCmpr& pam, char* sVertexs, char* sArcs)
 					continue;
 				}
 				int k = GetArcIndex(row, col);
-				pam->arcs[k].AdjType = 1;
+				if (GetArc(pam, row, col).AdjType==0)
+				{
+					pam->arcs[k].AdjType = 1;
+					(pam->arcnum)++;
+				}
 				bFindFirstVertex = false;
 			}
 		}
@@ -209,7 +217,7 @@ void PrintAdjMatrix(PAdjMatrix& pam)
 	printf("\n\n");
 	for (size_t i = 0; i < pam->vexnum; i++)
 	{
-		printf("%c\t", pam->vexs[i]);
+		printf("  %c\t", pam->vexs[i]);
 		for (size_t j = 0; j < pam->vexnum; j++)
 		{
 			if (pam->arcs[i][j].AdjType)
@@ -236,7 +244,7 @@ void PrintAdjMatrix(PAdjMatrixCmpr& pam)
 	printf("\n\n");
 	for (size_t i = 0; i < pam->vexnum; i++)
 	{
-		printf("%c\t", pam->vexs[i]);
+		printf("  %c\t", pam->vexs[i]);
 		for (size_t j = 0; j < pam->vexnum; j++)
 		{
 			if (GetArc(pam, i, j).AdjType)
