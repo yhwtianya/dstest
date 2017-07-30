@@ -33,6 +33,12 @@ int FindVertex(PAdjMatrix& pam, char vex);
 void CreateDG(PAdjMatrix& pam, char* sVertexs, char* sArcs);
 void CreateUG(PAdjMatrix& pam, char* sVertexs, char* sArcs);
 void PrintAdjMatrix(PAdjMatrix& pam);
+int GetNextArc(PAdjMatrix& pam, int row, int startcol);
+int GetFirstArc(PAdjMatrix& pam, int row);
+void Visit(PAdjMatrix& pam, int index);
+void VisitArc(PAdjMatrix& pam, int src, int dst);
+void DepthFirstSearch(PAdjMatrix& pam, bool visited[], int row);
+void TraverseGraph(PAdjMatrix& pam);
 
 /*	无向图（网）的弧在矩阵中有对称行，采用倒三角压缩矩阵存储无向图（网）
 *	由于不存在自身到自身的弧，弧矩阵的对角线不需要存储,
@@ -59,3 +65,9 @@ void CreateUG(PAdjMatrixCmpr& pam, char* sVertexs, char* sArcs);
 void PrintAdjMatrix(PAdjMatrixCmpr& pam);
 ArcNode InitArcNode(int adjtype);
 ArcNode GetArc(PAdjMatrixCmpr& pam, int row, int col, ArcNode def=InitArcNode(0));
+int GetFirstArc(PAdjMatrixCmpr& pam, int row);
+int GetNextArc(PAdjMatrixCmpr& pam, int row, int startcol);
+void DepthFirstSearch(PAdjMatrixCmpr& pam, bool visited[], int index_src);
+void TraverseGraph(PAdjMatrixCmpr& pam);
+void Visit(PAdjMatrixCmpr& pam, int index);
+void VisitArc(PAdjMatrixCmpr& pam, int src, int dst);

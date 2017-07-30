@@ -49,3 +49,8 @@ PArcNode InitArcNode(int adjvex);
 bool HasArc(PAdjList& al, int adjvex_src, int adjvex_dst);
 PArcNode GetArc(PAdjList& al, int adjvex_src, int adjvex_dst);
 void PushArc(PAdjList& al, int adjvex_src, int adjvex_dst);
+PArcNode GetNextArc(PArcNode& pan);
+void Visit(PAdjList& pam, int index);
+void VisitArc(PAdjList& pal, int src, int dst);
+void DepthFirstSearch(PAdjList& pal, bool visited[], int index_src);
+void TraverseGraph(PAdjList& pal);

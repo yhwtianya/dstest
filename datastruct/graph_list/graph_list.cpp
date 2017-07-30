@@ -182,3 +182,60 @@ void PushArc(PAdjList& al, int adjvex_src, int adjvex_dst)
 	if (UG == al->kind)
 		PushArcInno(al, adjvex_dst, adjvex_src);
 }
+
+PArcNode GetNextArc(PArcNode& pan)
+{
+	return pan->nextarc;
+}
+
+PArcNode GetFirstArc(PAdjList& pal, int row)
+{
+	return pal->vertex[row].firstarc;
+}
+
+void Visit(PAdjList& pam, int index)
+{
+	return;
+	printf("%c ", pam->vertex[index].data);
+}
+
+void VisitArc(PAdjList& pal, int src, int dst)
+{
+	printf("%c --> %c, ", pal->vertex[src].data, pal->vertex[dst].data);
+}
+
+void DepthFirstSearch(PAdjList& pal, bool visited[], int index_src)
+{
+	visited[index_src] = true;
+	Visit(pal, index_src);
+	PArcNode pan_dst = GetFirstArc(pal, index_src);
+	while(NULL!=pan_dst)
+	{
+		if (visited[pan_dst->adjvex] == 0)
+		{
+			VisitArc(pal, index_src, pan_dst->adjvex);
+			DepthFirstSearch(pal, visited, pan_dst->adjvex);
+		}
+		pan_dst = GetNextArc(pan_dst);
+	}
+}
+
+/*	采用邻接表方式存储弧节点，弧链表元素的不同先后顺序会影响生成树元素的顺序。
+*	采用邻接矩阵方式存储弧节点，因为按矩阵下标找相邻的弧，不存在这个问题	*/
+void TraverseGraph(PAdjList& pal)
+{
+	bool *visited = (bool*)malloc(sizeof(bool)*pal->vexnum);
+	for (size_t i = 0; i < pal->vexnum; i++)
+	{
+		visited[i] = false;
+	}
+
+	for (size_t i = 0; i < pal->vexnum; i++)
+	{
+		if (visited[i] != true)
+		{
+			DepthFirstSearch(pal, visited, i);
+		}
+	}
+}
+

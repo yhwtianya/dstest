@@ -260,6 +260,69 @@ void PrintAdjMatrix(PAdjMatrixCmpr& pam)
 	}
 }
 
+int GetNextArc(PAdjMatrix& pam, int row, int startcol)
+{
+	for (size_t i = startcol; i < GRAPH_MAX_VERTEX_NUM; i++)
+	{
+		//PAdjMatrixCmpr和PAdjMatrix相比，仅这里不同
+		if (pam->arcs[row][i].AdjType == 1)
+			return i;
+	}
+
+	return -1;
+}
+
+int GetFirstArc(PAdjMatrix& pam, int row)
+{
+	return GetNextArc(pam, row, 0);
+}
+
+void Visit(PAdjMatrix& pam, int index)
+{
+	return;
+	printf("%c ", pam->vexs[index]);
+}
+
+void VisitArc(PAdjMatrix& pam, int src, int dst)
+{
+	printf("%c --> %c, ", pam->vexs[src], pam->vexs[dst]);
+}
+
+void DepthFirstSearch(PAdjMatrix& pam, bool visited[], int index_src)
+{
+	visited[index_src] = true;
+	Visit(pam, index_src);
+	int index_dst = GetFirstArc(pam, index_src);
+	while (-1 != index_dst)
+	{
+		if (visited[index_dst] == 0)
+		{
+			VisitArc(pam, index_src, index_dst);
+			DepthFirstSearch(pam, visited, index_dst);
+		}
+		index_dst = GetNextArc(pam, index_src, index_dst + 1);
+	}
+}
+
+/*	采用邻接表方式存储弧节点，弧链表元素的不同先后顺序会影响生成树元素的顺序。
+*	采用邻接矩阵方式存储弧节点，因为按矩阵下标找相邻的弧，不存在这个问题	*/
+void TraverseGraph(PAdjMatrix& pam)
+{
+	bool *visited = (bool*)malloc(sizeof(bool)*pam->vexnum);
+	for (size_t i = 0; i < pam->vexnum; i++)
+	{
+		visited[i] = false;
+	}
+
+	for (size_t i = 0; i < pam->vexnum; i++)
+	{
+		if (visited[i] != true)
+		{
+			DepthFirstSearch(pam, visited, i);
+		}
+	}
+}
+
 ArcNode InitArcNode(int adjtype)
 {
 	ArcNode an;
@@ -270,5 +333,66 @@ ArcNode InitArcNode(int adjtype)
 ArcNode GetArc(PAdjMatrixCmpr& pam, int row, int col, ArcNode def/*=InitArcNode(0)*/)
 {
 	return pam->arcs[GetArcIndex(row, col)];
+}
+
+int GetNextArc(PAdjMatrixCmpr& pam, int row, int startcol)
+{
+	for (size_t i = startcol; i < GRAPH_MAX_VERTEX_NUM; i++)
+	{
+		//PAdjMatrixCmpr和PAdjMatrix相比，仅这里不同
+		if (GetArc(pam, row, i).AdjType == 1)
+			return i;
+	}
+
+	return -1;
+}
+
+int GetFirstArc(PAdjMatrixCmpr& pam, int row)
+{
+	return GetNextArc(pam, row, 0);
+}
+
+void Visit(PAdjMatrixCmpr& pam, int index)
+{
+	return;
+	printf("%c ", pam->vexs[index]);
+}
+
+void VisitArc(PAdjMatrixCmpr& pam, int src, int dst)
+{
+	printf("%c --> %c, ", pam->vexs[src], pam->vexs[dst]);
+}
+
+void DepthFirstSearch(PAdjMatrixCmpr& pam, bool visited[], int index_src)
+{
+	visited[index_src] = true;
+	Visit(pam, index_src);
+	int index_dst = GetFirstArc(pam, index_src);
+	while (-1!= index_dst)
+	{
+		if (visited[index_dst] == 0)
+		{
+			VisitArc(pam, index_src, index_dst);
+			DepthFirstSearch(pam, visited, index_dst);
+		}
+		index_dst = GetNextArc(pam, index_src, index_dst + 1);
+	}
+}
+
+void TraverseGraph(PAdjMatrixCmpr& pam)
+{
+	bool *visited = (bool*)malloc(sizeof(bool)*pam->vexnum);
+	for (size_t i = 0; i < pam->vexnum; i++)
+	{
+		visited[i] = false;
+	}
+
+	for (size_t i = 0; i < pam->vexnum; i++)
+	{
+		if (visited[i] != true)
+		{
+			DepthFirstSearch(pam, visited, i);
+		}
+	}
 }
 
