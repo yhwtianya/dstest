@@ -54,3 +54,5 @@ void Visit(PAdjList& pam, int index);
 void VisitArc(PAdjList& pal, int src, int dst);
 void DepthFirstSearch(PAdjList& pal, bool visited[], int index_src);
 void TraverseGraph(PAdjList& pal);
+void BreadFirstSearch(PAdjList& pal, bool visited[], int index_src);
+void TraverseGraphBFS(PAdjList& pal);

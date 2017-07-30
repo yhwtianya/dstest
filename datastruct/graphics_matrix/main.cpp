@@ -44,6 +44,10 @@ int main()
 	printf("\nDepthFirstSearch:");
 	TraverseGraph(pamUGCmpr1);
 	printf("\n");
+	//邻接矩阵无向图广度优先遍历生成树
+	printf("\nBradeFirstSearch:");
+	TraverseGraphBFS(pamUG1);
+	printf("\n");
 
 
 	return 0;

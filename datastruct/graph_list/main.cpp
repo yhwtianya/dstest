@@ -30,6 +30,10 @@ int main()
 	printf("\nDepthFirstSearch:");
 	TraverseGraph(pamUG1);
 	printf("\n");
+	//邻接表无向图广度优先遍历生成树
+	printf("\nBradeFirstSearch:");
+	TraverseGraphBFS(pamUG1);
+	printf("\n");
 
 
 	return 0;

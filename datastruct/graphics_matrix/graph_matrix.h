@@ -39,6 +39,8 @@ void Visit(PAdjMatrix& pam, int index);
 void VisitArc(PAdjMatrix& pam, int src, int dst);
 void DepthFirstSearch(PAdjMatrix& pam, bool visited[], int row);
 void TraverseGraph(PAdjMatrix& pam);
+void BreadFirstSearch(PAdjMatrix& pam, bool visited[], int index);
+void TraverseGraphBFS(PAdjMatrix& pal);
 
 /*	无向图（网）的弧在矩阵中有对称行，采用倒三角压缩矩阵存储无向图（网）
 *	由于不存在自身到自身的弧，弧矩阵的对角线不需要存储,

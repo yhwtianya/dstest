@@ -1,4 +1,6 @@
 #include "graph_list.h"
+#include "queue_ds.h"
+using namespace DS;
 
 void InitAdjList(PAdjList& pam, GraphKind kind)
 {
@@ -235,6 +237,51 @@ void TraverseGraph(PAdjList& pal)
 		if (visited[i] != true)
 		{
 			DepthFirstSearch(pal, visited, i);
+		}
+	}
+}
+
+/*	递归支撑深度优先，队列支撑广度优先。切记广度优先里没有递归，
+*	外层循环进行依次出队，内层循环进行层所有元素入队。		*/
+void BreadFirstSearch(PAdjList& pal, bool visited[], int index)
+{
+	PQueue q = NULL;
+	InitQueue(q);
+	int index_src = index;
+	EnQueue(q, &index_src);
+	Visit(pal, index_src);
+	visited[index_src] = true;
+	int *pindex = NULL;
+	while (NULL != (pindex=(int*)DelQueue(q)))
+	{
+		index_src = *pindex;
+		PArcNode pan = pal->vertex[index_src].firstarc;
+		while (NULL != pan)
+		{
+			if (visited[pan->adjvex]==false)
+			{
+				VisitArc(pal, index_src, pan->adjvex);
+				visited[pan->adjvex] = true;
+				EnQueue(q, &(pan->adjvex));
+			}
+			pan = pan->nextarc;
+		}
+	}
+}
+
+void TraverseGraphBFS(PAdjList& pal)
+{
+	bool *visited = (bool*)malloc(sizeof(bool)*pal->vexnum);
+	for (size_t i = 0; i < pal->vexnum; i++)
+	{
+		visited[i] = false;
+	}
+
+	for (size_t i = 0; i < pal->vexnum; i++)
+	{
+		if (visited[i] != true)
+		{
+			BreadFirstSearch(pal, visited, i);
 		}
 	}
 }
