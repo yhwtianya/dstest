@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define GRAPH_MAX_VERTEX_NUM	128
+#define UN_DN_MAX_WEIGHT		65535
 typedef enum
 {
 	DG,	//有向图
@@ -19,6 +20,7 @@ typedef struct OtherInfo	//弧节点
 typedef struct ArcNode	//弧节点
 {
 	int adjvex;
+	int weight;
 	ArcNode* nextarc;
 	OtherInfo* info;
 }ArcNode, *PArcNode;
@@ -29,6 +31,7 @@ typedef struct VertexNode
 {
 	VertexData data;
 	ArcNode* firstarc;
+	int	mark;
 }VertexNode, *PVertexNode;
 
 //Adjoining Matrix
@@ -44,15 +47,19 @@ void FreeAdjList(PAdjList& pam);
 int FindVertex(PAdjList& pam, char vex);
 void CreateDG(PAdjList& pam, char* sVertexs, char* sArcs);
 void CreateUG(PAdjList& pam, char* sVertexs, char* sArcs);
+void CreateUN(PAdjList& pam, char* sVertexs, char* sArcs);
 void PrintAdjList(PAdjList& pam);
-PArcNode InitArcNode(int adjvex);
+PArcNode InitArcNode(int adjvex, int weight=0);
 bool HasArc(PAdjList& al, int adjvex_src, int adjvex_dst);
 PArcNode GetArc(PAdjList& al, int adjvex_src, int adjvex_dst);
-void PushArc(PAdjList& al, int adjvex_src, int adjvex_dst);
+int GetArcWeight(PAdjList& al, int adjvex_src, int adjvex_dst, int def=UN_DN_MAX_WEIGHT);
+void PushArc(PAdjList& al, int adjvex_src, int adjvex_dst, int weight = 0);
 PArcNode GetNextArc(PArcNode& pan);
+PArcNode GetFirstArc(PAdjList& pal, int row);
 void Visit(PAdjList& pam, int index);
 void VisitArc(PAdjList& pal, int src, int dst);
 void DepthFirstSearch(PAdjList& pal, bool visited[], int index_src);
 void TraverseGraph(PAdjList& pal);
 void BreadFirstSearch(PAdjList& pal, bool visited[], int index_src);
 void TraverseGraphBFS(PAdjList& pal);
+void TestGraph_List();

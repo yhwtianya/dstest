@@ -24,12 +24,18 @@
     <ClCompile Include="..\comon\queue_ds.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="graph_app.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graph_list.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\include\queue_ds.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="graph_app.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

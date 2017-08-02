@@ -148,11 +148,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\comon\queue_ds.cpp" />
+    <ClCompile Include="graph_app.cpp" />
     <ClCompile Include="graph_list.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\queue_ds.h" />
+    <ClInclude Include="graph_app.h" />
     <ClInclude Include="graph_list.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -224,14 +224,15 @@ void PrintAdjMatrix(PAdjMatrix& pam)
 		{
 			if (pam->arcs[i][j].AdjType)
 			{
-				printf("%d %c%c\t", pam->arcs[i][j].AdjType, pam->vexs[i], pam->vexs[j]);
+				printf("%c%c%d\t", pam->vexs[i], pam->vexs[j], pam->arcs[i][j].AdjType);
 			}
 			else
 			{
-				printf("%d\t", pam->arcs[i][j].AdjType);
+				//printf("%d\t", pam->arcs[i][j].AdjType);
+				printf("%c\t", '-');
 			}
 		}
-		printf("\n\n");
+		printf("\n");
 	}
 }
 
@@ -251,14 +252,16 @@ void PrintAdjMatrix(PAdjMatrixCmpr& pam)
 		{
 			if (GetArc(pam, i, j).AdjType)
 			{
-				printf("%d %c%c\t", GetArc(pam, i, j).AdjType, pam->vexs[i], pam->vexs[j]);
+				printf("%c%c%d\t", pam->vexs[i], pam->vexs[j], GetArc(pam, i, j).AdjType);
 			}
 			else
 			{
-				printf("%d\t", GetArc(pam, i, j).AdjType);
+				//printf("%d\t", GetArc(pam, i, j).AdjType);
+				printf("%c\t", '-');
+
 			}
 		}
-		printf("\n\n");
+		printf("\n");
 	}
 }
 

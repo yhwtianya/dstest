@@ -17,6 +17,7 @@ void InitAdjList(PAdjList& pam, GraphKind kind)
 	{
 		pam->vertex[i].data = '\0';
 		pam->vertex[i].firstarc = NULL;
+		pam->vertex[i].mark = 0;
 	}
 }
 
@@ -92,6 +93,58 @@ void CreateUG(PAdjList& pam, char* sVertexs, char* sArcs)
 	return CreateDG(pam, sVertexs, sArcs);
 }
 
+void CreateUN(PAdjList& al, char* sVertexs, char* sArcs)
+{
+	if (NULL == al)
+	{
+		InitAdjList(al, UN);
+	}
+
+	int count = 0;
+	for (size_t i = 0; i < strlen(sVertexs); i++)
+	{
+		if (sVertexs[i] != ',' && sVertexs[i] != ' ')
+		{
+			if (-1 == FindVertex(al, sVertexs[i]))
+			{
+				al->vertex[count].data = sVertexs[i];
+				al->vertex[count].firstarc = NULL;
+				al->vexnum = ++count;
+			}
+		}
+	}
+
+	bool bFindFirstVertex = false;
+	bool bFindSecondVertex = false;
+	char firstVertex, secondVertex;
+	int weight = 0;
+	for (size_t i = 0; i < strlen(sArcs); i++)
+	{
+		if (sArcs[i] != ',' && sArcs[i] != ' ')
+		{
+			if (!bFindFirstVertex)
+			{
+				firstVertex = sArcs[i];
+				bFindFirstVertex = true;
+			}
+			else if (bFindFirstVertex && !bFindSecondVertex)
+			{
+				secondVertex = sArcs[i];
+				bFindSecondVertex = true;
+			}
+			else
+			{
+				weight = atoi(&(sArcs[i]));
+				int row = FindVertex(al, firstVertex);
+				int col = FindVertex(al, secondVertex);
+				PushArc(al, row, col, weight);
+				bFindFirstVertex = false;
+				bFindSecondVertex = false;
+			}
+		}
+	}
+}
+
 void PrintAdjList(PAdjList& pam)
 {
 	for (size_t i = 0; i < pam->vexnum; i++)
@@ -109,23 +162,30 @@ void PrintAdjList(PAdjList& pam)
 			PArcNode pan = GetArc(pam, i, j);
 			if (pan)
 			{
-				printf("%d %c%c\t", 1, pam->vertex[i].data, pam->vertex[j].data);
+				if (pam->kind == UN || pam->kind == DN)
+					printf("%c%c%d\t", pam->vertex[i].data, pam->vertex[j].data, GetArcWeight(pam, i, j));
+				else
+					printf("%c%c%d\t", pam->vertex[i].data, pam->vertex[j].data, 1);
 			}
 			else
 			{
-				printf("%d\t", 0);
+				if (pam->kind == UN || pam->kind == DN)
+					printf("%c\t", '-');
+				else
+					printf("%c\t", '-');
 			}
 		}
-		printf("\n\n");
+		printf("\n");
 	}
 }
 
-PArcNode InitArcNode(int adjvex)
+PArcNode InitArcNode(int adjvex, int weight/*=0*/)
 {
 	PArcNode arc = (PArcNode)malloc(sizeof(ArcNode));
 	arc->adjvex = adjvex;
 	arc->info = NULL;
 	arc->nextarc = NULL;
+	arc->weight = weight;
 	return arc;
 }
 
@@ -149,12 +209,22 @@ PArcNode GetArc(PAdjList& al, int adjvex_src, int adjvex_dst)
 	return NULL;
 }
 
-bool PushArcInno(PAdjList& al, int adjvex_src, int adjvex_dst)
+int GetArcWeight(PAdjList& al, int adjvex_src, int adjvex_dst, int def/*=UN_DN_MAX_WEIGHT*/)
+{
+	PArcNode pan = GetArc(al, adjvex_src, adjvex_dst);
+	if (pan)
+	{
+		return pan->weight;
+	}
+	return def;
+}
+
+bool PushArcInno(PAdjList& al, int adjvex_src, int adjvex_dst, int weight/*=0*/)
 {
 	PArcNode pan = al->vertex[adjvex_src].firstarc;
 	if (NULL == pan)
 	{
-		al->vertex[adjvex_src].firstarc = InitArcNode(adjvex_dst);
+		al->vertex[adjvex_src].firstarc = InitArcNode(adjvex_dst, weight);
 		return true;
 	}
 	while (NULL != pan)
@@ -165,7 +235,7 @@ bool PushArcInno(PAdjList& al, int adjvex_src, int adjvex_dst)
 		}
 		if (pan->nextarc == NULL)
 		{
-			pan->nextarc = InitArcNode(adjvex_dst);
+			pan->nextarc = InitArcNode(adjvex_dst, weight);
 			return true;
 		}
 		pan = pan->nextarc;
@@ -174,15 +244,15 @@ bool PushArcInno(PAdjList& al, int adjvex_src, int adjvex_dst)
 	return false;
 }
 
-void PushArc(PAdjList& al, int adjvex_src, int adjvex_dst)
+void PushArc(PAdjList& al, int adjvex_src, int adjvex_dst, int weight/*=0*/)
 {
-	if (PushArcInno(al, adjvex_src, adjvex_dst))
+	if (PushArcInno(al, adjvex_src, adjvex_dst, weight))
 	{
 		(al->arcnum)++;
 	}
 
-	if (UG == al->kind)
-		PushArcInno(al, adjvex_dst, adjvex_src);
+	if (UG==al->kind || UN==al->kind)
+		PushArcInno(al, adjvex_dst, adjvex_src, weight);
 }
 
 PArcNode GetNextArc(PArcNode& pan)
@@ -284,5 +354,40 @@ void TraverseGraphBFS(PAdjList& pal)
 			BreadFirstSearch(pal, visited, i);
 		}
 	}
+}
+
+void TestGraph_List()
+{
+	char* svexs = "A, B, C, D, E, C, A";
+	char* sarcs = "AB, AD, B C , DC, DA, C E";
+	printf("vertex expression:%s\n", svexs);
+	printf("arc expression:%s\n", sarcs);
+	//创建无向图
+	printf("\nCreateUG:\n");
+	PAdjList pamUG = NULL;
+	CreateUG(pamUG, svexs, sarcs);
+	PrintAdjList(pamUG);
+	//创建有向图
+	printf("\nCreateDG:\n");
+	PAdjList pamDG = NULL;
+	CreateDG(pamDG, svexs, sarcs);
+	PrintAdjList(pamDG);
+
+	char* svexs1 = "A, B, C, D, E, F, G, H, I";
+	char* sarcs1 = "AB, AD, AE, BC, CF, DG, BE, EG, GH, HI";
+	printf("vertex expression:%s\n", svexs1);
+	printf("arc expression:%s\n", sarcs1);
+	printf("CreateUG:\n");
+	PAdjList pamUG1 = NULL;
+	CreateUG(pamUG1, svexs1, sarcs1);
+	PrintAdjList(pamUG1);
+	//邻接表无向图深度优先遍历生成树
+	printf("\nDepthFirstSearch:");
+	TraverseGraph(pamUG1);
+	printf("\n");
+	//邻接表无向图广度优先遍历生成树
+	printf("\nBradeFirstSearch:");
+	TraverseGraphBFS(pamUG1);
+	printf("\n");
 }
 
