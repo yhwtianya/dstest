@@ -47,3 +47,14 @@ bool DS::IsEmptyQueue(PQueue& q)
 	return q->head == q->tail;
 }
 
+int DS::SizeQueue(PQueue& q)
+{
+	int size = q->head - q->tail;
+	if (size<0)
+	{
+		size += MAX_QUEUEDS_LEN;
+	}
+
+	return size;
+}
+

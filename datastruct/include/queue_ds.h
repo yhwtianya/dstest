@@ -14,4 +14,5 @@ namespace DS
 	void EnQueue(PQueue& q, void* pitem);
 	bool IsFullQueue(PQueue& q);
 	bool IsEmptyQueue(PQueue& q);
+	int SizeQueue(PQueue& q);
 }

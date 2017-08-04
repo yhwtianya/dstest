@@ -31,7 +31,8 @@ typedef struct VertexNode
 {
 	VertexData data;
 	ArcNode* firstarc;
-	int	mark;
+	int	mark;	//标记是否访问过，遍历图用
+	int indugree;	//当前入度数，拓扑排序用
 }VertexNode, *PVertexNode;
 
 //Adjoining Matrix
@@ -48,6 +49,7 @@ int FindVertex(PAdjList& pam, char vex);
 void CreateDG(PAdjList& pam, char* sVertexs, char* sArcs);
 void CreateUG(PAdjList& pam, char* sVertexs, char* sArcs);
 void CreateUN(PAdjList& pam, char* sVertexs, char* sArcs);
+void CreateDN(PAdjList& al, char* sVertexs, char* sArcs);
 void PrintAdjList(PAdjList& pam);
 PArcNode InitArcNode(int adjvex, int weight=0);
 bool HasArc(PAdjList& al, int adjvex_src, int adjvex_dst);
@@ -63,3 +65,4 @@ void TraverseGraph(PAdjList& pal);
 void BreadFirstSearch(PAdjList& pal, bool visited[], int index_src);
 void TraverseGraphBFS(PAdjList& pal);
 void TestGraph_List();
+void ReversedGraph(PAdjList& palsrc, PAdjList& paldst);

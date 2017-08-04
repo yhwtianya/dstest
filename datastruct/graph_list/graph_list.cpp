@@ -2,22 +2,23 @@
 #include "queue_ds.h"
 using namespace DS;
 
-void InitAdjList(PAdjList& pam, GraphKind kind)
+void InitAdjList(PAdjList& pal, GraphKind kind)
 {
-	if (NULL != pam)
+	if (NULL != pal)
 	{
 		printf("the AdjList is not NULL\n");
 		return;
 	}
 
-	pam = (PAdjList)malloc(sizeof(AdjList));
-	pam->arcnum = pam->vexnum = 0;
-	pam->kind = kind;
+	pal = (PAdjList)malloc(sizeof(AdjList));
+	pal->arcnum = pal->vexnum = 0;
+	pal->kind = kind;
 	for (size_t i = 0; i < GRAPH_MAX_VERTEX_NUM; i++)
 	{
-		pam->vertex[i].data = '\0';
-		pam->vertex[i].firstarc = NULL;
-		pam->vertex[i].mark = 0;
+		pal->vertex[i].data = '\0';
+		pal->vertex[i].firstarc = NULL;
+		pal->vertex[i].mark = 0;
+		pal->vertex[i].indugree = 0;
 	}
 }
 
@@ -56,6 +57,7 @@ void CreateDG(PAdjList& al, char* sVertexs, char* sArcs)
 			{
 				al->vertex[count].data = sVertexs[i];
 				al->vertex[count].firstarc = NULL;
+				al->vertex[count].indugree = 0;
 				al->vexnum = ++count;
 			}
 		}
@@ -109,6 +111,7 @@ void CreateUN(PAdjList& al, char* sVertexs, char* sArcs)
 			{
 				al->vertex[count].data = sVertexs[i];
 				al->vertex[count].firstarc = NULL;
+				al->vertex[count].indugree = 0;
 				al->vexnum = ++count;
 			}
 		}
@@ -145,6 +148,15 @@ void CreateUN(PAdjList& al, char* sVertexs, char* sArcs)
 	}
 }
 
+void CreateDN(PAdjList& al, char* sVertexs, char* sArcs)
+{
+	if (NULL == al)
+	{
+		InitAdjList(al, DN);
+	}
+
+	return CreateUN(al, sVertexs, sArcs);
+}
 void PrintAdjList(PAdjList& pam)
 {
 	for (size_t i = 0; i < pam->vexnum; i++)
@@ -249,6 +261,7 @@ void PushArc(PAdjList& al, int adjvex_src, int adjvex_dst, int weight/*=0*/)
 	if (PushArcInno(al, adjvex_src, adjvex_dst, weight))
 	{
 		(al->arcnum)++;
+		al->vertex[adjvex_dst].indugree++;
 	}
 
 	if (UG==al->kind || UN==al->kind)
@@ -389,5 +402,31 @@ void TestGraph_List()
 	printf("\nBradeFirstSearch:");
 	TraverseGraphBFS(pamUG1);
 	printf("\n");
+}
+
+void ReversedGraph(PAdjList& palsrc, PAdjList& paldst)
+{
+	if (NULL == palsrc)
+		return;
+	if (NULL == paldst)
+		InitAdjList(paldst, palsrc->kind);
+
+	for (size_t i = 0; i < palsrc->vexnum; i++)
+	{
+		paldst->vertex[i].data = palsrc->vertex[i].data;
+		paldst->vertex[i].firstarc = NULL;
+		paldst->vertex[i].indugree = 0;
+		paldst->vexnum++;
+	}
+
+	for (size_t i = 0; i < palsrc->vexnum; i++)
+	{
+		PArcNode pan = palsrc->vertex[i].firstarc;
+		while (NULL != pan)
+		{
+			PushArc(paldst, pan->adjvex, i, pan->weight);
+			pan = pan->nextarc;
+		}
+	}
 }
 
