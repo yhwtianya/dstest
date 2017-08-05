@@ -1,6 +1,7 @@
 #include "queue_ds.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <memory.h>
 
 void DS::InitQueue(PQueue& q)
 {
@@ -56,5 +57,15 @@ int DS::SizeQueue(PQueue& q)
 	}
 
 	return size;
+}
+
+void DS::CopyQueue(PQueue& src, PQueue& dst)
+{
+	if (NULL==dst)
+		InitQueue(dst);
+
+	memcpy(dst->queue, src->queue, sizeof(void*)*MAX_QUEUEDS_LEN);
+	dst->head = src->head;
+	dst->tail = src->tail;
 }
 

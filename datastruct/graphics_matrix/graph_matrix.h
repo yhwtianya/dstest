@@ -4,6 +4,7 @@
 #include <string.h>
 #define GRAPH_MAX_VERTEX_NUM	128
 #define CMPR_MATRIX_ARC_MAX_NUM		(GRAPH_MAX_VERTEX_NUM*(GRAPH_MAX_VERTEX_NUM-1)/2+1)
+#define UN_DN_MAX_WEIGHT		65535
 typedef enum
 {
 	DG,	//有向图
@@ -15,7 +16,7 @@ typedef enum
 typedef char VertexData;
 typedef struct ArcNode	//弧节点
 {
-	int AdjType;	//代表是否邻接或权值
+	int weight;	//代表是否邻接或权值
 }ArcNode, *PArcNode;
 
 //Adjoining Matrix
@@ -32,6 +33,8 @@ void FreeAdjMatrix(PAdjMatrix& pam);
 int FindVertex(PAdjMatrix& pam, char vex);
 void CreateDG(PAdjMatrix& pam, char* sVertexs, char* sArcs);
 void CreateUG(PAdjMatrix& pam, char* sVertexs, char* sArcs);
+void CreateDN(PAdjMatrix& pam, char* sVertexs, char* sArcs);
+void CreateUN(PAdjMatrix& pam, char* sVertexs, char* sArcs);
 void PrintAdjMatrix(PAdjMatrix& pam);
 int GetNextArc(PAdjMatrix& pam, int row, int startcol);
 int GetFirstArc(PAdjMatrix& pam, int row);
@@ -41,6 +44,7 @@ void DepthFirstSearch(PAdjMatrix& pam, bool visited[], int row);
 void TraverseGraph(PAdjMatrix& pam);
 void BreadFirstSearch(PAdjMatrix& pam, bool visited[], int index);
 void TraverseGraphBFS(PAdjMatrix& pal);
+int GetArcWeight(PAdjMatrix& pam, int row, int col, int def = 0);
 
 /*	无向图（网）的弧在矩阵中有对称行，采用倒三角压缩矩阵存储无向图（网）
 *	由于不存在自身到自身的弧，弧矩阵的对角线不需要存储,

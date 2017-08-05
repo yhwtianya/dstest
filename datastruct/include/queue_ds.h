@@ -15,4 +15,5 @@ namespace DS
 	bool IsFullQueue(PQueue& q);
 	bool IsEmptyQueue(PQueue& q);
 	int SizeQueue(PQueue& q);
+	void CopyQueue(PQueue& src, PQueue& dst);
 }

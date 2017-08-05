@@ -163,12 +163,12 @@ void PrintAdjList(PAdjList& pam)
 	{
 		if (0 == i)
 			printf("\t");
-		printf("%c\t", pam->vertex[i]);
+		printf("%c\t", pam->vertex[i].data);
 	}
 	printf("\n\n");
 	for (size_t i = 0; i < pam->vexnum; i++)
 	{
-		printf("  %c\t", pam->vertex[i]);
+		printf("  %c\t", pam->vertex[i].data);
 		for (size_t j = 0; j < pam->vexnum; j++)
 		{
 			PArcNode pan = GetArc(pam, i, j);

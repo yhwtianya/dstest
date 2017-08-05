@@ -18,7 +18,7 @@ void InitAdjMatrix(PAdjMatrix& pam, GraphKind kind)
 	{
 		for (size_t j = 0; j < GRAPH_MAX_VERTEX_NUM; j++)
 		{
-			pam->arcs[i][j].AdjType = 0;
+			pam->arcs[i][j].weight = 0;
 		}
 	}
 }
@@ -37,7 +37,7 @@ void InitAdjMatrix(PAdjMatrixCmpr& pam, GraphKind kind)
 	memset(pam->vexs, 0, sizeof(pam->vexs));
 	for (size_t i = 0; i < CMPR_MATRIX_ARC_MAX_NUM; i++)
 	{
-		pam->arcs[i].AdjType = 0;
+		pam->arcs[i].weight = 0;
 	}
 }
 
@@ -133,11 +133,11 @@ void CreateDG(PAdjMatrix& pam, char* sVertexs, char* sArcs)
 				secondVertex = sArcs[i];
 				int row = FindVertex(pam, firstVertex);
 				int col = FindVertex(pam, secondVertex);
-				if (pam->arcs[row][col].AdjType==0)
+				if (pam->arcs[row][col].weight==0)
 				{
-					pam->arcs[row][col].AdjType = 1;
+					pam->arcs[row][col].weight = 1;
 					if (UG == pam->kind)
-						pam->arcs[col][row].AdjType = 1;
+						pam->arcs[col][row].weight = 1;
 					(pam->arcnum)++;
 				}
 				bFindFirstVertex = false;
@@ -197,12 +197,82 @@ void CreateUG(PAdjMatrixCmpr& pam, char* sVertexs, char* sArcs)
 					continue;
 				}
 				int k = GetArcIndex(row, col);
-				if (GetArc(pam, row, col).AdjType==0)
+				if (GetArc(pam, row, col).weight==0)
 				{
-					pam->arcs[k].AdjType = 1;
+					pam->arcs[k].weight = 1;
 					(pam->arcnum)++;
 				}
 				bFindFirstVertex = false;
+			}
+		}
+	}
+}
+
+void CreateDN(PAdjMatrix& pam, char* sVertexs, char* sArcs)
+{
+	if (NULL == pam)
+	{
+		InitAdjMatrix(pam, DN);
+	}
+	return CreateUN(pam, sVertexs, sArcs);
+}
+
+void CreateUN(PAdjMatrix& pam, char* sVertexs, char* sArcs)
+{
+	if (NULL == pam)
+	{
+		InitAdjMatrix(pam, UN);
+	}
+
+	int count = 0;
+	for (size_t i = 0; i < strlen(sVertexs); i++)
+	{
+		if (sVertexs[i] != ',' && sVertexs[i] != ' ')
+		{
+			if (-1 == FindVertex(pam, sVertexs[i]))
+			{
+				pam->vexs[count] = sVertexs[i];
+				pam->vexnum = ++count;
+			}
+		}
+	}
+
+	bool bFindFirstVertex = false;
+	bool bFindSecondVertex = false;
+	char firstVertex, secondVertex;
+	int weight = 0;
+	for (size_t i = 0; i < strlen(sArcs); ++i)
+	{
+		if (sArcs[i] != ',' && sArcs[i] != ' ')
+		{
+			if (!bFindFirstVertex)
+			{
+				firstVertex = sArcs[i];
+				bFindFirstVertex = true;
+			}
+			else if (bFindFirstVertex && !bFindSecondVertex)
+			{
+				secondVertex = sArcs[i];
+				bFindSecondVertex = true;
+			}
+			else
+			{
+				weight = atoi(&(sArcs[i]));
+				int row = FindVertex(pam, firstVertex);
+				int col = FindVertex(pam, secondVertex);
+				if (row == col)
+				{
+					//无向图不存在自身到自身的弧
+					continue;
+				}
+				if (pam->arcs[row][col].weight == 0)
+				{
+					pam->arcs[row][col].weight = weight;
+					(pam->arcnum)++;
+				}
+				bFindFirstVertex = false;
+				bFindSecondVertex = false;
+				while (++i < strlen(sArcs) && sArcs[i] != ',');
 			}
 		}
 	}
@@ -222,9 +292,9 @@ void PrintAdjMatrix(PAdjMatrix& pam)
 		printf("  %c\t", pam->vexs[i]);
 		for (size_t j = 0; j < pam->vexnum; j++)
 		{
-			if (pam->arcs[i][j].AdjType)
+			if (pam->arcs[i][j].weight)
 			{
-				printf("%c%c%d\t", pam->vexs[i], pam->vexs[j], pam->arcs[i][j].AdjType);
+				printf("%c%c%d\t", pam->vexs[i], pam->vexs[j], pam->arcs[i][j].weight);
 			}
 			else
 			{
@@ -250,9 +320,9 @@ void PrintAdjMatrix(PAdjMatrixCmpr& pam)
 		printf("  %c\t", pam->vexs[i]);
 		for (size_t j = 0; j < pam->vexnum; j++)
 		{
-			if (GetArc(pam, i, j).AdjType)
+			if (GetArc(pam, i, j).weight)
 			{
-				printf("%c%c%d\t", pam->vexs[i], pam->vexs[j], GetArc(pam, i, j).AdjType);
+				printf("%c%c%d\t", pam->vexs[i], pam->vexs[j], GetArc(pam, i, j).weight);
 			}
 			else
 			{
@@ -270,7 +340,7 @@ int GetNextArc(PAdjMatrix& pam, int row, int startcol)
 	for (size_t i = startcol; i < GRAPH_MAX_VERTEX_NUM; i++)
 	{
 		//PAdjMatrixCmpr和PAdjMatrix相比，仅这里不同
-		if (pam->arcs[row][i].AdjType == 1)
+		if (pam->arcs[row][i].weight == 1)
 			return i;
 	}
 
@@ -331,7 +401,7 @@ void TraverseGraph(PAdjMatrix& pam)
 ArcNode InitArcNode(int adjtype)
 {
 	ArcNode an;
-	an.AdjType = adjtype;
+	an.weight = adjtype;
 	return an;
 }
 
@@ -345,7 +415,7 @@ int GetNextArc(PAdjMatrixCmpr& pam, int row, int startcol)
 	for (size_t i = startcol; i < GRAPH_MAX_VERTEX_NUM; i++)
 	{
 		//PAdjMatrixCmpr和PAdjMatrix相比，仅这里不同
-		if (GetArc(pam, row, i).AdjType == 1)
+		if (GetArc(pam, row, i).weight == 1)
 			return i;
 	}
 
@@ -450,5 +520,13 @@ void TraverseGraphBFS(PAdjMatrix& pal)
 			BreadFirstSearch(pal, visited, i);
 		}
 	}
+}
+
+int GetArcWeight(PAdjMatrix& pam, int row, int col, int def /*= 0*/)
+{
+	if (pam->arcs[row][col].weight == 0)
+		return def;
+
+	return pam->arcs[row][col].weight;
 }
 

@@ -149,10 +149,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\comon\queue_ds.cpp" />
+    <ClCompile Include="graph_app_m.cpp" />
     <ClCompile Include="graph_matrix.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="graph_app_m.h" />
     <ClInclude Include="graph_matrix.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
