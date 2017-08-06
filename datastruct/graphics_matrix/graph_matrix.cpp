@@ -525,7 +525,11 @@ void TraverseGraphBFS(PAdjMatrix& pal)
 int GetArcWeight(PAdjMatrix& pam, int row, int col, int def /*= 0*/)
 {
 	if (pam->arcs[row][col].weight == 0)
+	{
+		if (row == col)
+			return 0;
 		return def;
+	}
 
 	return pam->arcs[row][col].weight;
 }

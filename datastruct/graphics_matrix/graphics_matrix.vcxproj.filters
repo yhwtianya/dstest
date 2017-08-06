@@ -27,6 +27,9 @@
     <ClCompile Include="graph_app_m.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\comon\stack_ds.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graph_matrix.h">

@@ -58,7 +58,7 @@ void MinSpanningTree_Prim(PAdjList& pal, int init_grow, PMST_Edge& pmste);
 void PrintMST_Edge(PAdjList& pal, PMST_Edge& pmste, int size);
 void CopyMST_Edge(MST_Edge& esrc, MST_Edge& edst);
 
-/*  Prim算法思想：加边不构成回路。
+/*  Kruskal算法思想：加边不构成回路。
 *	1. 将n个顶点看成n个集合
 *	2. 按权值由小到大的顺序选择边，选边应满足此边不会和之前所有选边构成回路，将该边放到生成树边的集合TE中。
 *		同时将该边的两个顶点所在的顶点集合合并

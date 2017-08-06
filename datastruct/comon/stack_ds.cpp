@@ -68,3 +68,8 @@ int DS::SizeStack(PStack& s)
 {
 	return s->top + 1;
 }
+
+void DS::ClearStack(PStack& s)
+{
+	s->top = -1;
+}

@@ -5,7 +5,7 @@
 int main()
 {
 	TestGraphMatrix();
-	TestShortestPath_DJS();
+	TestShortestPath();
 
 	return 0;
 }

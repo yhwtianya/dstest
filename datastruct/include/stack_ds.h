@@ -18,4 +18,5 @@ namespace DS
 	void* PopStack(PStack &s);
 	void* GetTopStack(PStack &s);
 	int SizeStack(PStack& s);
+	void ClearStack(PStack& s);
 }

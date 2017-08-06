@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\comon\queue_ds.cpp" />
+    <ClCompile Include="..\comon\stack_ds.cpp" />
     <ClCompile Include="graph_app_m.cpp" />
     <ClCompile Include="graph_matrix.cpp" />
     <ClCompile Include="main.cpp" />
