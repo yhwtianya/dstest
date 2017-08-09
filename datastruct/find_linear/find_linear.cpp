@@ -24,6 +24,7 @@ int SeqSearch_Post(RecordList l, KeyType k)
 	return i;
 }
 
+/*  折半查找可以通过形成判定树来看其性能和查找轨迹*/
 int BinSearch(RecordList l, KeyType k)
 {
 	int low = 1;
