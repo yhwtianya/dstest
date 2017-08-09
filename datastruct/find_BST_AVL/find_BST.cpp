@@ -440,6 +440,7 @@ int maxtreeBST(int x, int y)
 
 void TestSearchBST()
 {
+	printf("\n------BST 测试-----\n");
 	//创建二叉排序树，并中序输出
 	PBSTree root = NULL;
 	char * pstr = "45, 24, 53, 12, 90, 28, 25";

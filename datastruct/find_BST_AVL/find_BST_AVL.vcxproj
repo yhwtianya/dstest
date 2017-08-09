@@ -148,10 +148,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\comon\queue_ds.cpp" />
+    <ClCompile Include="find_AVL.cpp" />
     <ClCompile Include="find_BST.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="find_AVL.h" />
     <ClInclude Include="find_BST.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
