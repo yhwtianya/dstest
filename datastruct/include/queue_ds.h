@@ -1,6 +1,6 @@
 #pragma once
 
-#define MAX_QUEUEDS_LEN		128
+#define MAX_QUEUEDS_LEN		256
 namespace DS
 {
 	typedef struct Queue
