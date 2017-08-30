@@ -6,9 +6,34 @@
 #include <iomanip>
 using namespace std;
 #define NODE_CHAR_WIDE		2
+
+/*	定义B树最小阶数为3，因为如果阶为2，空节点也是有效的内部节点，则B树不一定是平衡树，
+	B树经常退化成线性树，实用性还不如AVL。而且如果阶数为2，需要对内部空节点做很多判断处理，
+	造成时间复杂度增加。2阶B树实用性低，实现效率低，故不实现。*/
+#define MIN_BTREE_M			3
+
 #ifdef _DEBUG
 	#define B_TREE_DEBUG
 #endif
+
+/*
+B树又叫平衡多路查找树。(注：切勿简单的认为一棵m阶的B树是m叉树)
+
+B树的性质（m阶的B树）
+
+1. 树中每个结点最多含有m个孩子（m>=2）；
+2. 除根结点和叶子结点外，其它每个结点至少有[ceil(m / 2)]个孩子（其中ceil(x)是一个取上限的函数）；
+3. 根结点至少有2个孩子（除非B树只包含一个结点：根结点）；
+4. 所有叶子结点都出现在同一层，叶子结点不包含任何关键字信息(可以看做是外部结点或查询失败的结点，
+	指向这些结点的指针都为null)；（注：叶子节点只是没有孩子和指向孩子的指针，这些节点也存在，也有元素。类似红黑树中，每一个NULL指针即当做叶子结点，只是没画出来而已）。
+5. 每个非终端结点中包含有n个关键字信息： (n，P0，K1，P1，K2，P2，......，Kn，Pn)。其中：
+	a) Ki (i=1...n)为关键字，且关键字按顺序升序排序K(i-1)< Ki。
+	b) Pi为指向子树根的结点，且指针P(i-1)指向子树种所有结点的关键字均小于Ki，但都大于K(i-1)。
+	c) 关键字的个数n必须满足： [ceil(m / 2)-1]<= n <= m-1。比如有j个孩子的非叶结点恰好有j-1个关键码。
+
+2-3树，即3阶B树
+2-3-4树，即4阶B树
+*/
 
 template <class T>
 class BTNode
@@ -208,7 +233,7 @@ void BTree<T>::clear(int order)
 	freeNode(_root);
 	_hot = NULL;
 	_size = 0;
-	if (order>=3)
+	if (order>=MIN_BTREE_M)
 		_order = order;
 	_item_wide = getItemWide();
 }
@@ -378,9 +403,9 @@ void BTree<T>::freeNode(BTNode<T> *& node)
 
 template <class T>
 BTree<T>::BTree(int order)
-	:_hot(NULL), _root(NULL), _size(0), _order(3)
+	:_hot(NULL), _root(NULL), _size(0), _order(MIN_BTREE_M)
 {
-	if (order >= 3)
+	if (order >= MIN_BTREE_M)
 		_order = order;
 
 	_item_wide = getItemWide();
