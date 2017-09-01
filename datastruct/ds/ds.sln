@@ -35,6 +35,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "splay_tree", "..\splay_tree
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "B_tree", "..\B_tree\B_tree.vcxproj", "{ED54D999-35D3-4F45-88D3-54CD07729EB9}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RB_tree", "..\RB_tree\RB_tree.vcxproj", "{F8B1CF2A-FEAA-45F0-8398-EDA05A5D4742}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -171,6 +173,14 @@ Global
 		{ED54D999-35D3-4F45-88D3-54CD07729EB9}.Release|x64.Build.0 = Release|x64
 		{ED54D999-35D3-4F45-88D3-54CD07729EB9}.Release|x86.ActiveCfg = Release|Win32
 		{ED54D999-35D3-4F45-88D3-54CD07729EB9}.Release|x86.Build.0 = Release|Win32
+		{F8B1CF2A-FEAA-45F0-8398-EDA05A5D4742}.Debug|x64.ActiveCfg = Debug|x64
+		{F8B1CF2A-FEAA-45F0-8398-EDA05A5D4742}.Debug|x64.Build.0 = Debug|x64
+		{F8B1CF2A-FEAA-45F0-8398-EDA05A5D4742}.Debug|x86.ActiveCfg = Debug|Win32
+		{F8B1CF2A-FEAA-45F0-8398-EDA05A5D4742}.Debug|x86.Build.0 = Debug|Win32
+		{F8B1CF2A-FEAA-45F0-8398-EDA05A5D4742}.Release|x64.ActiveCfg = Release|x64
+		{F8B1CF2A-FEAA-45F0-8398-EDA05A5D4742}.Release|x64.Build.0 = Release|x64
+		{F8B1CF2A-FEAA-45F0-8398-EDA05A5D4742}.Release|x86.ActiveCfg = Release|Win32
+		{F8B1CF2A-FEAA-45F0-8398-EDA05A5D4742}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
