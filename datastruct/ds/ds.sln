@@ -39,6 +39,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RB_tree", "..\RB_tree\RB_tr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PQ_ComplHeap", "..\PQ_ComplHeap\PQ_ComplHeap.vcxproj", "{E3838C54-5D5A-439B-9110-BAA5F99071CF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PQ_LeftHeap", "..\PQ_LeftHeap\PQ_LeftHeap.vcxproj", "{EF286F60-DE75-4366-9BAB-B09615F5B585}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -191,6 +193,14 @@ Global
 		{E3838C54-5D5A-439B-9110-BAA5F99071CF}.Release|x64.Build.0 = Release|x64
 		{E3838C54-5D5A-439B-9110-BAA5F99071CF}.Release|x86.ActiveCfg = Release|Win32
 		{E3838C54-5D5A-439B-9110-BAA5F99071CF}.Release|x86.Build.0 = Release|Win32
+		{EF286F60-DE75-4366-9BAB-B09615F5B585}.Debug|x64.ActiveCfg = Debug|x64
+		{EF286F60-DE75-4366-9BAB-B09615F5B585}.Debug|x64.Build.0 = Debug|x64
+		{EF286F60-DE75-4366-9BAB-B09615F5B585}.Debug|x86.ActiveCfg = Debug|Win32
+		{EF286F60-DE75-4366-9BAB-B09615F5B585}.Debug|x86.Build.0 = Debug|Win32
+		{EF286F60-DE75-4366-9BAB-B09615F5B585}.Release|x64.ActiveCfg = Release|x64
+		{EF286F60-DE75-4366-9BAB-B09615F5B585}.Release|x64.Build.0 = Release|x64
+		{EF286F60-DE75-4366-9BAB-B09615F5B585}.Release|x86.ActiveCfg = Release|Win32
+		{EF286F60-DE75-4366-9BAB-B09615F5B585}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
