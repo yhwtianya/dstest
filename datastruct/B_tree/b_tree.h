@@ -342,7 +342,8 @@ void BTree<T>::print(ostream& os /*= cout*/)
 				sprintf_s(p, bufsize - (p - buf) - 1, "_");
 			}
 			os << left << setw(_item_wide) << buf << right;
-			printSpace(inter_space_item_count, os);
+			if (i + 1 != vItems[level].size())
+				printSpace(inter_space_item_count, os);
 		}
 		os << endl;
 	}

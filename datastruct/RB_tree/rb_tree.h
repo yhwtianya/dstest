@@ -643,7 +643,8 @@ void RedBlackTree<T>::print(ostream& os /*= cout*/)
 				os << left << setw(_item_wide) << " " << right;
 				//os << left << setw(_item_wide) << "_" << right;
 			}
-			printSpace(inter_space_item_count, os);
+			if (i + 1 != vItems[level].size())
+				printSpace(inter_space_item_count, os);
 		}
 		os << endl;
 	}
